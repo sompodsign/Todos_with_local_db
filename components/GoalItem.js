@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { FlatList, View } from "react-native";
 import { Avatar, Card, IconButton } from "react-native-paper";
 
 const GoalItem = ({ items, deleteItem }) => {
@@ -39,12 +34,4 @@ const GoalItem = ({ items, deleteItem }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  todo: {
-    borderWidth: 1,
-    backgroundColor: "#ccc",
-    margin: 2,
-    padding: 6,
-  },
-});
 export default GoalItem;

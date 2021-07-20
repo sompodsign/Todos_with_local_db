@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Keyboard } from "react-native";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 import Header from "./components/Header";
@@ -79,7 +79,7 @@ export default function App() {
   return (
     <View style={styles.background}>
       <Header />
-      <View style={styles.container}>
+      <View style={styles.container} onPress={() => Keyboard.dismiss()}>
         <GoalItem deleteItem={deleteHandler} items={todos} />
 
         <GoalInput addHandler={pressHandler} />
