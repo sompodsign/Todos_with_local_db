@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View,Alert  } from "react-native";
+import { Alert, View,  } from "react-native";
 import { TextInput } from "react-native-paper";
 
 const GoalInput = ({ addHandler }) => {
@@ -13,15 +13,12 @@ const GoalInput = ({ addHandler }) => {
       Alert.alert(
         "",
         "Field is empty.",
-        [{ text: "OK"}]
-      )
+        [{ text: "OK" }],
+      );
     }
-
-
   };
 
   return (
-
     <View>
       <TextInput
         onSubmitEditing={() => pressHandler(title)}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Keyboard } from "react-native";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 import Header from "./components/Header";
@@ -77,14 +77,18 @@ export default function App() {
   }
 
   return (
-    <View style={styles.background}>
-      <Header />
-      <View style={styles.container} onPress={() => Keyboard.dismiss()}>
-        <GoalItem deleteItem={deleteHandler} items={todos} />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-        <GoalInput addHandler={pressHandler} />
+      <View style={styles.background} onPress={Keyboard.dismiss}>
+        <Header />
+        <View style={styles.container} onPress={() => Keyboard.dismiss()}>
+          <GoalItem deleteItem={deleteHandler} items={todos} />
+
+          <GoalInput addHandler={pressHandler} />
+        </View>
       </View>
-    </View>
+
+    </TouchableWithoutFeedback>
   );
 };
 
