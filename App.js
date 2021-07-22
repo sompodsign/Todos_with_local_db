@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
+  Dimensions,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-}
-  from "react-native";
+} from "react-native";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 import Header from "./components/Header";
@@ -58,7 +57,7 @@ export default function App() {
       schema: [TaskSchema],
     });
 
-    const lastTask = realm.objects("Task").sorted('_id', true)[0];
+    const lastTask = realm.objects("Task").sorted("_id", true)[0];
     const highestId = lastTask == null ? 0 : lastTask._id + 1;
 
     realm.write(() => {
@@ -88,23 +87,32 @@ export default function App() {
     });
 
   }
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 50
+
+  const keyboardVerticalOffset = Platform.OS === "ios" ? 60 : 50;
+
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
       <View style={styles.background} onPress={Keyboard.dismiss}>
         <Header />
-        <KeyboardAvoidingView style={styles.container} behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
-        <View onPress={() => Keyboard.dismiss()}>
-            <GoalItem deleteItem={deleteHandler} items={todos} />
-            <GoalInput addHandler={pressHandler} />
+        {/*<KeyboardAvoidingView style={styles.container} behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>*/}
+        <View style={styles.container}>
+          <View onPress={() => Keyboard.dismiss()}>
+            <GoalItem deleteItem={deleteHandler} items={todos} addHandler={pressHandler} />
+          </View>
         </View>
-        </KeyboardAvoidingView>
+        {/*</KeyboardAvoidingView>*/}
+
+
+          <GoalInput inputStyle={styles.input} addHandler={pressHandler} />
+
       </View>
     </TouchableWithoutFeedback>
   );
 };
+
+const windowHeight = Dimensions.get("window").height - 200;
 
 const styles = StyleSheet.create({
   background: {
@@ -114,6 +122,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 30,
     marginTop: 10,
-    flex: 1,
   },
+  messageContainer: {},
+  input: {
+
+  }
 });
