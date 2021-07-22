@@ -1,10 +1,10 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import { Avatar, Card, IconButton } from "react-native-paper";
 
 const GoalItem = ({ items, deleteItem }) => {
   return (
-    <View>
+
       <FlatList
         keyExtractor={(item) => item._id.toString()}
         data={items}
@@ -13,6 +13,7 @@ const GoalItem = ({ items, deleteItem }) => {
             mode="outlined"
             style={{ backgroundColor: "#293B5F" }}
           >
+
             <Card.Title
               style={{ color: "green" }}
               onPress={deleteItem}
@@ -26,12 +27,17 @@ const GoalItem = ({ items, deleteItem }) => {
                 <IconButton {...props} color="#B2AB8C" icon="check" onPress={() => deleteItem(item._id)} />
               )}
             />
+
           </Card>
+
         )}
       />
 
-    </View>
   );
 };
 
+
+
 export default GoalItem;
+
+

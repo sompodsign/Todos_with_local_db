@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+}
+  from "react-native";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 import Header from "./components/Header";
@@ -49,9 +58,13 @@ export default function App() {
       schema: [TaskSchema],
     });
 
+    const lastTask = realm.objects("Task").sorted('_id', true)[0];
+    const highestId = lastTask == null ? 0 : lastTask._id + 1;
+
     realm.write(() => {
       realm.create("Task", {
-        _id: realm.objects("Task").length + 1,
+
+        _id: highestId,
         title: title,
         date: date,
         month: month,
@@ -75,19 +88,20 @@ export default function App() {
     });
 
   }
+  const keyboardVerticalOffset = Platform.OS === 'ios' ? 60 : 50
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
       <View style={styles.background} onPress={Keyboard.dismiss}>
         <Header />
-        <View style={styles.container} onPress={() => Keyboard.dismiss()}>
-          <GoalItem deleteItem={deleteHandler} items={todos} />
-
-          <GoalInput addHandler={pressHandler} />
+        <KeyboardAvoidingView style={styles.container} behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
+        <View onPress={() => Keyboard.dismiss()}>
+            <GoalItem deleteItem={deleteHandler} items={todos} />
+            <GoalInput addHandler={pressHandler} />
         </View>
+        </KeyboardAvoidingView>
       </View>
-
     </TouchableWithoutFeedback>
   );
 };
@@ -100,13 +114,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 30,
     marginTop: 10,
-  },
-  image: {
     flex: 1,
-    justifyContent: "center",
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover", // or 'stretch'
   },
 });
